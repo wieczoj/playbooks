@@ -1,0 +1,16 @@
+---
+- hosts: all
+
+  handlers:
+  - name: kasuj jesli
+    command: rm -rf /tmp/yum.log
+
+  tasks:
+  - name: copy file
+    copy:
+      src: /etc/passwd
+      dest: /tmp/passwd
+      mode: 0644
+      owner: root
+    notify:
+     - kasuj jesli
