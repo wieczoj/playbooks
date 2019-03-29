@@ -1,0 +1,29 @@
+---
+- hosts: all
+
+  tags:
+    - configuration
+  gather_facts: no
+
+  handlers:
+  - name: kasuj jesli
+    file:
+      path: /tmp/yum.log
+      state: absent
+
+  tasks:
+  - name: copy file
+    copy:
+      src: /etc/passwd
+      dest: /tmp/passwd
+      mode: 0644
+      owner: root
+    notify:
+     - kasuj jesli
+  
+  - name: archive remote directories
+    archive:
+      path: /etc/audit
+      dest: /tmp/file.tar.bz2
+      format: bz2
+
